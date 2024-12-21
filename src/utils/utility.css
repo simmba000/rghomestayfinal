@@ -1,0 +1,61 @@
+.hover-underline-animation {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .hover-underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #a51956;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .hover-underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  .active-link::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+  
+  .site-logo__img {
+    height: 58px;
+    width: 135px;
+}
+.brand-divider-bottom {
+  border-bottom: 1px solid #fe7dbd;
+}
+
+.transform-center-y {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+/* For mobile devices (max width 768px) */
+/* Default background image (for desktop and larger screens) */
+header {
+  background-image: url('../assets/images/bgweb.webp');
+  background-size: cover;
+  background-position: center center;
+}
+
+/* For mobile devices (max width 768px) */
+@media (max-width: 768px) {
+  header {
+    background-image: url('../assets/images/bgmob.webp'); /* Add a different image for mobile */
+    background-size: cover;
+    background-position: center center;
+  }
+}
+
+.overflow-visible {
+  overflow: visible;
+}
