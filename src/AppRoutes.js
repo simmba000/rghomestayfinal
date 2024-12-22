@@ -8,7 +8,7 @@ import Footer from './components/common/Footer';
 // Import pages
 import HomePage from './pages/HomePage';
 import RoomsPage from './pages/RoomsPage';
-import RoomDetailPage from './pages/RoomDetailPage';
+import RoomDetailsPage from './pages/RoomDetailsPage';
 import BookingPage from './pages/BookingPage';
 import AboutPage from './pages/AboutPage';
 import LoginPage from './pages/LoginPage';
@@ -17,6 +17,7 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 // Import context (for authentication)
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ScrollToTop from './components/scroll-to-top/ScrollToTop';
+
 
 // Protected Route Component
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -48,7 +49,7 @@ function AppRoutes() {
               {/* Public Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/rooms" element={<RoomsPage />} />
-              <Route path="/rooms/:roomId" element={<RoomDetailPage />} />
+              <Route path="/rooms/:roomId" element={<RoomDetailsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/login" element={<LoginPage />} />
               

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate  } from "react-router-dom";
 import { useSearchContext } from "../context/SearchContext";
 import GlobalSearchBox from "../ux/global-search-box/GlobalSearchbox";
 
@@ -35,6 +35,7 @@ const dummyRooms = [
 
 const RoomsPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { searchState, updateSearchState } = useSearchContext();
   const [rooms, setRooms] = useState(dummyRooms);
   const [sortType, setSortType] = useState("");
@@ -100,6 +101,19 @@ const RoomsPage = () => {
     console.log("Searching rooms with:", searchState);
   };
 
+  const handleBookNow = (room) => {
+    navigate(`/rooms/${room.id}`, {
+      state: {
+        roomData: room,
+        searchDetails: {
+          checkIn: searchState.checkIn,
+          checkOut: searchState.checkOut,
+          guests: searchState.guests
+        }
+      }
+    });
+  };
+
   return (
     <section className="min-h-screen">
       <div className="bg-brand py-6">
@@ -146,7 +160,9 @@ const RoomsPage = () => {
                     <span className="text-lg font-bold text-green-600">
                       ₹{room.price}
                     </span>
-                    <button className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600">
+                    <button 
+                    onClick={() => handleBookNow(room)}
+                    className="px-4 py-2 bg-pink-500 text-white font-semibold rounded-lg hover:bg-pink-600">
                       Book Now
                     </button>
                   </div>

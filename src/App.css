@@ -11,3 +11,5 @@
 
 @import './ux/input/input.scss';
 @import './ux/date-range-picker/date-range-picker.scss';
+
+@import 'react-image-gallery/styles/css/image-gallery.css';
