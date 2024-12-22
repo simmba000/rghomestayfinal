@@ -1,5 +1,6 @@
+// AppRoutes.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 // Import components
 import Navbar from './components/common/Navbar';
@@ -14,21 +15,21 @@ import AboutPage from './pages/AboutPage';
 import LoginPage from './pages/LoginPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 
-// Import context (for authentication)
+// Import context and utilities
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ScrollToTop from './components/scroll-to-top/ScrollToTop';
 
-
-// Protected Route Component
+// Protected Route Component with role-based access
 const ProtectedRoute = ({ children, adminOnly = false }) => {
   const { isAuthenticated, user } = useAuth();
+  const location = useLocation();
 
   if (!isAuthenticated) {
-    // Redirect to login if not authenticated
-    return <Navigate to="/login" replace />;
+    // Redirect to login if not authenticated, but remember where they were trying to go
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (adminOnly && user.role !== 'admin') {
+  if (adminOnly && user?.role !== 'admin') {
     // Redirect to home if not an admin trying to access admin routes
     return <Navigate to="/" replace />;
   }
@@ -43,7 +44,7 @@ function AppRoutes() {
       <AuthProvider>
         <div className="flex flex-col min-h-screen">
           <Navbar />
-          <ScrollToTop/>
+          <ScrollToTop />
           <main className="flex-grow">
             <Routes>
               {/* Public Routes */}
@@ -52,35 +53,31 @@ function AppRoutes() {
               <Route path="/rooms/:roomId" element={<RoomDetailsPage />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/login" element={<LoginPage />} />
-              
-              {/* Protected Booking Route */}
-              <Route 
-                path="/booking/:roomId" 
+
+              {/* Protected User Routes */}
+              <Route
+                path="/booking/:roomId"
                 element={
                   <ProtectedRoute>
                     <BookingPage />
                   </ProtectedRoute>
-                } 
+                }
               />
-              
-              {/* Admin Protected Routes */}
-              <Route 
-                path="/admin" 
+
+              {/* Protected Admin Routes */}
+              <Route
+                path="/admin"
                 element={
                   <ProtectedRoute adminOnly={true}>
                     <AdminDashboardPage />
                   </ProtectedRoute>
-                } 
+                }
               />
-              
+
               {/* 404 Not Found Route */}
-              <Route 
-                path="*" 
-                element={<Navigate to="/" replace />} 
-              />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>
-          
           <Footer />
         </div>
       </AuthProvider>
@@ -89,9 +86,3 @@ function AppRoutes() {
 }
 
 export default AppRoutes;
-
-// Example of how to use in App.js
-// import AppRoutes from './AppRoutes';
-// function App() {
-//   return <AppRoutes />;
-// }

@@ -1,15 +1,15 @@
+// AuthContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
-// Create AuthContext
 const AuthContext = createContext(null);
 
-// AuthProvider Component
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Check for existing token on mount
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -29,19 +29,36 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (credentials) => {
-    // Mock API call
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials),
-    });
+    try {
+      // For demo purposes, we'll simulate the API response
+      let token;
+      
+      // Check for admin credentials
+      if (credentials.email === 'admin@example.com' && credentials.password === 'admin123') {
+        // Create admin token
+        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFkbWluMTIzIiwiZW1haWwiOiJhZG1pbkBleGFtcGxlLmNvbSIsInJvbGUiOiJhZG1pbiIsImV4cCI6MTkyNTMyOTYwMH0';
+      } 
+      // Check for regular user credentials
+      else if (credentials.email === 'user1@example.com' && credentials.password === 'password1') {
+        // Create user token
+        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InVzZXIxMjMiLCJlbWFpbCI6InVzZXIxQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJleHAiOjE5MjUzMjk2MDB9';
+      }
+      // Handle social login
+      else if (credentials.provider) {
+        token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNvY2lhbDEyMyIsImVtYWlsIjoic29jaWFsQGV4YW1wbGUuY29tIiwicm9sZSI6InVzZXIiLCJleHAiOjE5MjUzMjk2MDB9';
+      }
+      else {
+        throw new Error('Invalid credentials');
+      }
 
-    if (!response.ok) throw new Error('Login failed');
-    const { token } = await response.json();
-    localStorage.setItem('token', token);
-    const decoded = jwtDecode(token);
-    setUser(decoded);
-    setIsAuthenticated(true);
+      localStorage.setItem('token', token);
+      const decoded = jwtDecode(token);
+      setUser(decoded);
+      setIsAuthenticated(true);
+      return decoded; // Return decoded user for immediate access to role
+    } catch (error) {
+      throw new Error('Login failed. Please check your credentials.');
+    }
   };
 
   const logout = () => {
@@ -50,12 +67,21 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      isAuthenticated, 
+      isAdmin: user?.role === 'admin',
+      login, 
+      logout 
+    }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Hook
 export const useAuth = () => useContext(AuthContext);

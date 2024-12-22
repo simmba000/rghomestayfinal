@@ -27,7 +27,7 @@ const Dropdown = ({ triggerType = 'click', options = [] }) => {
         onMouseEnter={triggerType === 'hover' ? () => setIsOpen(true) : undefined}
         onMouseLeave={triggerType === 'hover' ? () => setIsOpen(false) : undefined}
       >
-        Menu
+        My Account
       </button>
       {isOpen && (
         <div
