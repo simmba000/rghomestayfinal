@@ -1,7 +1,7 @@
-import Footer from '../components/common/Footer';
-import Navbar from '../components/common/Navbar';
 import { Outlet } from 'react-router-dom';
 import ScrollToTop from '../components/scroll-to-top/ScrollToTop';
+import AdminSidebar from '../components/admin/adminsidebar';
+import AdminNavbar from '../components/admin/adminnavbar';
 
 /**
  * BaseLayout Component
@@ -9,15 +9,16 @@ import ScrollToTop from '../components/scroll-to-top/ScrollToTop';
  * It includes the global navbar, the main content, and the global footer.
  * @returns {JSX.Element} - The BaseLayout component.
  */
-const BaseLayout = () => {
+const AdminLayout= () => {
   return (
     <>
-      <Navbar />
+      <AdminNavbar/>
+      <AdminSidebar/>
       <ScrollToTop/>
       <Outlet />
-      <Footer />
+     
     </>
   );
 };
 
-export default BaseLayout;
+export default AdminLayout;

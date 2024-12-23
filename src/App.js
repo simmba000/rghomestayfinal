@@ -1,8 +1,9 @@
 import './App.css';
 import AppRoutes from './AppRoutes';
+import { AuthProvider } from './context/AuthContext';
 import { SearchProvider } from './context/SearchContext';
 function App() {
-   return <SearchProvider> <AppRoutes /> </SearchProvider>;
+   return <AuthProvider> <SearchProvider> <AppRoutes /> </SearchProvider> </AuthProvider>;
 }
 
 export default App;
