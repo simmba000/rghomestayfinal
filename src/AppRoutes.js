@@ -26,6 +26,7 @@ import Adminusers from './components/admin/adminusers';
 import Adminaddcoupons from './components/admin/adminaddcoupons';
 import Adminpromotionmail from './components/admin/adminpromotionalmail';
 import Adminsettings from './components/admin/adminsettings';
+import RegisterPage from './pages/RegisterPage';
 
 // Protected Route Component with role-based access
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -56,6 +57,7 @@ function AppRoutes() {
             <Route path="/rooms/:roomId" element={<RoomDetailsPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
             {/* Protected User Routes */}
             <Route

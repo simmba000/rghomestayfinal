@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { AlertCircle, Loader2, Eye, EyeOff, Github, Mail } from 'lucide-react';
+import { AlertCircle, Loader2, Eye, EyeOff, Mail } from 'lucide-react';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -103,7 +103,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="text-center text-3xl font-extrabold text-brand">
           Welcome back
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
@@ -123,14 +123,14 @@ const LoginPage = () => {
               <Mail className="h-5 w-5 mr-2 text-red-500" />
               Continue with Google
             </button>
-            <button
+            {/* <button
               onClick={() => handleSocialLogin('github')}
               className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
               disabled={isLoading}
             >
               <Github className="h-5 w-5 mr-2" />
               Continue with GitHub
-            </button>
+            </button> */}
           </div>
 
           <div className="mt-6">
@@ -232,7 +232,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-button hover:bg-button-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
